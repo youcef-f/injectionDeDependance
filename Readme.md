@@ -233,12 +233,24 @@ public class PresentationIOCavecSpringV1etV2 {
 	}
 }
 ```
-En cas d'extension de l'application par l'évolution des implémentations des interfaces **IDao** et **IMetier**, changer le fichier de configuration **configDynamicInstanciation.txt** en ajouter les nouvelles implémentations des interfaces.
+En cas d'extension de l'application par l'évolution des implémentations des interfaces **IDao** et **IMetier**, changer le fichier de configuration **applicationContext.xml** en ajouter les nouvelles implémentations des interfaces.
 
-```bash
-> cat configDynamicInstanciation.txt
-dao.DaoImplementV2 
-metier.MetierImplementV2
+
+```xml
+> cat applicationContext.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="d" class="dao.DaoImplementV2"></bean>
+	<bean id="metier" class="metier.MetierImplementV2">
+		<property name="dao" ref="d"></property>
+	</bean>
+</beans>
 ```
 
 
